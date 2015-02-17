@@ -25,9 +25,16 @@ variable "asg_number_of_instances" {
   description = "The number of instances we want in the ASG"
   // We use this to populate the following ASG settings
   // - max_size
-  // - min_size
   // - desired_capacity
 }
+
+variable "asg_minimum_number_of_instances" {
+  description = "The minimum number of instances the ASG should maintain"
+  default = 1
+  // Defaults to 1
+  // Can be set to 0 if you never want the ASG to replace failed instances
+}
+
 variable "health_check_grace_period" {
   description = "Number of seconds for a health check to time out"
   default = 300

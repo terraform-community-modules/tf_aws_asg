@@ -26,11 +26,16 @@ Input Variables
 - `user_data` - The path to the user_data file for the Launch
    Configuration
 - `asg_name` - The Auto-Scaling group name.
-- `asg_number of instances` - The number of instances we want in the ASG
+- `asg_number_of_instances` - The number of instances we want in the ASG
     - This is used to populate the following ASG settings.
     - max_size
-    - min_size
     - desired_capacity
+- `asg_minimum_number_of_instances` - The minimum number of instances
+   the ASG should maintain.
+    - This is used for min_size
+    - It defaults to 1
+    - You can set it to 0 if you want the ASG to do nothing when an
+      instances fails
 - `health_check_grace_period` - Number of seconds for the health check
    time out. Defaults to 300.
 - `health_check_type` - The health check type. Options are `ELB` and
@@ -67,6 +72,7 @@ module "my_autoscaling_group" {
   user_data = "${var.user_data}"
   asg_name = "${var.asg_name}"
   asg_number_of_instances = "${var.asg_number_of_instances}"
+  asg_minimum_number_of_instancs = "${var.asg_minimum_number_of_instances}"
   //Using a reference to an SG we create in the same template
   load_balancer_name = "${module.my_elb.elb_name}"
   subnet_az1 = "${var.subnet_az1}"
