@@ -101,3 +101,13 @@ module "my_autoscaling_group" {
 - load_balancer_name
 - subnet_az1
 - subnet_az2
+
+Authors
+=======
+
+Created and maintained by [Brandon Burton](https://github.com/solarce) (brandon@inatree.org).
+
+License
+=======
+
+Apache 2 Licensed. See LICENSE for full details.
