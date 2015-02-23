@@ -23,8 +23,8 @@ Input Variables
    be populated with.
 - `security_group` - The Security Group ID that instances in the ASG
    should use.
-- `user_data` - The path to the user_data file for the Launch
-   Configuration
+- `user_data` - The path to the user_data file for the Launch Configuration.
+    - Terraform will include the contents of this file in the Launch Configuration.
 - `asg_name` - The Auto-Scaling group name.
 - `asg_number_of_instances` - The number of instances we want in the ASG
     - This is used to populate the following ASG settings.
