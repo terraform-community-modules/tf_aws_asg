@@ -40,13 +40,12 @@ variable "health_check_grace_period" {
   default = 300
 }
 variable "health_check_type" {
-  default = "ELB"
+  default = "EC2"
   //Types available are:
   // - ELB
   // - EC2
   // * http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html#options
 }
-variable "load_balancer_name" {}
 
 //Our template assumes two AZs and two VPC subnets for them
 variable "subnet_az1" {

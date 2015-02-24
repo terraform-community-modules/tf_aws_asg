@@ -3,12 +3,12 @@ tf_aws_asg
 A Terraform module for creating an Auto-Scaling Group and a launch
 configuration for it.
 This module makes the following assumptions:
-* You have subnets in a VPC and that you want your instances
-   in two subnets (in two AZs)
+* *You do not want an ELB associated with your ASG*
+   * If you need ELB support, see [tf_aws_asg_elb](https://github.com/terraform-community-modules/tf_aws_asg_elb)
+* You have subnets in a VPC
+* You want your instance in two subnets (in two AZs)
 * You can fully bootstrap your instances using an AMI + user_data
-* You want to associate the ASG with an ELB
-* Your instances behind the ELB will be in a VPC
-* Your using a single Security Group for all instances in the ASG
+* You're using a single Security Group for all instances in the ASG
 
 Input Variables
 ---------------
@@ -42,10 +42,7 @@ Input Variables
 - `health_check_grace_period` - Number of seconds for the health check
    time out. Defaults to 300.
 - `health_check_type` - The health check type. Options are `ELB` and
-   `EC2`. It defaults to `ELB` in this module.
-- `load_balancer_name` - The name of the ELB to associate with the ASG,
-   for settings it's backend instances. Ideally this is a reference to
-   an ELB you're making in the same template as this ASG.
+   `EC2`. It defaults to `EC2` in this module.
 - `subnet_az1` - The VPC subnet ID for AZ1
 - `subnet_az2` - The VPC subnet ID for AZ2
 
@@ -64,7 +61,7 @@ You can use these in your terraform template with the following steps.
 
 ```
 module "my_autoscaling_group" {
-  source = "github.com/solarce/tf_aws_asg"
+  source = "github.com/terraform-community-modules/tf_aws_asg"
   lc_name = "${var.lc_name}"
   ami_id = "${var.ami_id}"
   instance_type = "${var.instance_type}"
@@ -80,11 +77,8 @@ module "my_autoscaling_group" {
   asg_number_of_instances = "${var.asg_number_of_instances}"
   asg_minimum_number_of_instancs = "${var.asg_minimum_number_of_instances}"
 
-  //Using a reference to an SG we create in the same template
-  load_balancer_name = "${module.my_elb.elb_name}"
-
-  // The health_check_type can be EC2 or ELB and defaults to ELB
-  health_check_type = ${var.health_check_type}"
+  // The health_check_type can be EC2 or ELB and defaults to EC2
+  health_check_type = "${var.health_check_type}"
 
   subnet_az1 = "${var.subnet_az1}"
   subnet_az2 = "${var.subnet_az2}"
@@ -109,7 +103,6 @@ module "my_autoscaling_group" {
 - user_data
 - asg_name
 - asg_number_of_instances.
-- load_balancer_name
 - subnet_az1
 - subnet_az2
 

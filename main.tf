@@ -5,7 +5,8 @@
 // This template creates the following resources
 // - A launch configuration
 // - A auto-scaling group
-// It requires you create an ELB instance before you use it.
+// - It's meant to be used for ASGs that *don't*
+//   need an ELB associated with them.
 
 // Provider specific configs
 provider "aws" {
@@ -41,7 +42,6 @@ resource "aws_autoscaling_group" "main_asg" {
   desired_capacity = "${var.asg_number_of_instances}"
   health_check_grace_period = "${var.health_check_grace_period}"
   health_check_type = "${var.health_check_type}"
-  load_balancers = ["${var.load_balancer_name}"]
 
   // Takes a list of VPC subnet IDS, we assume two, for the two AZs
   vpc_zone_identifier = ["${var.subnet_az1}","${var.subnet_az2}"]
