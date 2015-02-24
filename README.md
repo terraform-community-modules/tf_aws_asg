@@ -22,6 +22,9 @@ Input Variables
 - `key_name` - The SSH key name (uploaded to EC2) instances should
    be populated with.
 - `security_group` - The Security Group ID that instances in the ASG
+    - This is usually set to resolve to a security group you make in the
+      same template as this module, e.g. "${module.sg_web.security_group_id_web}"
+    - It needs to be customized based on the name of your module resource.
    should use.
 - `user_data` - The path to the user_data file for the Launch Configuration.
     - Terraform will include the contents of this file in the Launch Configuration.
@@ -67,14 +70,22 @@ module "my_autoscaling_group" {
   instance_type = "${var.instance_type}"
   iam_instance_profile = "${var.iam_instance_profile}"
   key_name = "${var.key_name}"
+
   //Using a reference to an SG we create in the same template.
+  // - It needs to be customized based on the name of your module resource
   security_group = "${module.sg_web.security_group_id_web}"
+
   user_data = "${var.user_data}"
   asg_name = "${var.asg_name}"
   asg_number_of_instances = "${var.asg_number_of_instances}"
   asg_minimum_number_of_instancs = "${var.asg_minimum_number_of_instances}"
+
   //Using a reference to an SG we create in the same template
   load_balancer_name = "${module.my_elb.elb_name}"
+
+  // The health_check_type can be EC2 or ELB and defaults to ELB
+  health_check_type = ${var.health_check_type}"
+
   subnet_az1 = "${var.subnet_az1}"
   subnet_az2 = "${var.subnet_az2}"
 
