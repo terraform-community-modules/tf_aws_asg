@@ -47,12 +47,14 @@ variable "health_check_type" {
   // * http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html#options
 }
 
-//Our template assumes two AZs and two VPC subnets for them
-variable "subnet_az1" {
-  description = "The VPC subnet ID for AZ1"
+variable "subnet_azs" {
+  description = "The VPC subnet IDs"
+  // comma separated list
 }
-variable "subnet_az2" {
-  description = "The VPC subnet ID for AZ2"
+
+variable "azs" {
+  description = "Availability Zones"
+  // comma separated list
 }
 
 // Variables for providers used in this module
