@@ -6,7 +6,7 @@ This module makes the following assumptions:
 * *You do not want an ELB associated with your ASG*
    * If you need ELB support, see [tf_aws_asg_elb](https://github.com/terraform-community-modules/tf_aws_asg_elb)
 * You have subnets in a VPC
-* You want your instance in two subnets (in two AZs)
+* You want your instance in N subnets
 * You can fully bootstrap your instances using an AMI + user_data
 * You're using a single Security Group for all instances in the ASG
 
@@ -43,8 +43,10 @@ Input Variables
    time out. Defaults to 300.
 - `health_check_type` - The health check type. Options are `ELB` and
    `EC2`. It defaults to `EC2` in this module.
-- `subnet_az1` - The VPC subnet ID for AZ1
-- `subnet_az2` - The VPC subnet ID for AZ2
+- `azs` - The list of AZs - comma separated list
+- `subnet_azs` - The VPC subnet IDs - comma separated list
+  - Subnets must match the Availability Zones in var.azs
+
 
 Outputs
 -------
@@ -61,31 +63,31 @@ You can use these in your terraform template with the following steps.
 
 ```
 module "my_autoscaling_group" {
-  source = "github.com/terraform-community-modules/tf_aws_asg"
-  lc_name = "${var.lc_name}"
-  ami_id = "${var.ami_id}"
-  instance_type = "${var.instance_type}"
+  source               = "github.com/terraform-community-modules/tf_aws_asg"
+  lc_name              = "${var.lc_name}"
+  ami_id               = "${var.ami_id}"
+  instance_type        = "${var.instance_type}"
   iam_instance_profile = "${var.iam_instance_profile}"
-  key_name = "${var.key_name}"
+  key_name             = "${var.key_name}"
 
   //Using a reference to an SG we create in the same template.
   // - It needs to be customized based on the name of your module resource
   security_group = "${module.sg_web.security_group_id_web}"
 
-  user_data = "${var.user_data}"
-  asg_name = "${var.asg_name}"
-  asg_number_of_instances = "${var.asg_number_of_instances}"
+  user_data                      = "${var.user_data}"
+  asg_name                       = "${var.asg_name}"
+  asg_number_of_instances        = "${var.asg_number_of_instances}"
   asg_minimum_number_of_instancs = "${var.asg_minimum_number_of_instances}"
 
   // The health_check_type can be EC2 or ELB and defaults to EC2
   health_check_type = "${var.health_check_type}"
-
-  subnet_az1 = "${var.subnet_az1}"
-  subnet_az2 = "${var.subnet_az2}"
+  
+  azs        = "${var.azs}"
+  subnet_azs = "${var.subnet_azs}"
 
   aws_access_key = "${var.aws_access_key}"
   aws_secret_key = "${var.aws_secret_key}"
-  aws_region = "${var.aws_region}"
+  aws_region     = "${var.aws_region}"
 }
 ```
 
@@ -103,8 +105,8 @@ module "my_autoscaling_group" {
 - user_data
 - asg_name
 - asg_number_of_instances.
-- subnet_az1
-- subnet_az2
+- azs
+- subnet_azs
 
 Authors
 =======
