@@ -77,7 +77,7 @@ module "my_autoscaling_group" {
   user_data                      = "${var.user_data}"
   asg_name                       = "${var.asg_name}"
   asg_number_of_instances        = "${var.asg_number_of_instances}"
-  asg_minimum_number_of_instancs = "${var.asg_minimum_number_of_instances}"
+  asg_minimum_number_of_instances = "${var.asg_minimum_number_of_instances}"
 
   // The health_check_type can be EC2 or ELB and defaults to EC2
   health_check_type = "${var.health_check_type}"
