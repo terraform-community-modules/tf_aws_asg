@@ -61,3 +61,9 @@ variable "azs" {
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
 variable "aws_region" {}
+
+// Add tags to the autoscaling group to propagate to instances.
+variable tags { 
+    description = "tags to propague to the created instances of the auto scaling group. Must indicate key, value and propagate_at_launch"
+    type = "list"  
+} 
