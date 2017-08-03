@@ -66,4 +66,5 @@ variable "aws_region" {}
 variable tags { 
     description = "tags to propague to the created instances of the auto scaling group. Must indicate key, value and propagate_at_launch"
     type = "list"  
+    default = []
 } 
