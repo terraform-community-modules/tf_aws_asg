@@ -46,7 +46,21 @@ Input Variables
 - `azs` - The list of AZs - comma separated list
 - `subnet_azs` - The VPC subnet IDs - comma separated list
   - Subnets must match the Availability Zones in var.azs
-
+- `tags` - A list of tags to propague 
+  ```
+  tags = [
+    {
+      key                 = "Name"
+      value               = "your instance name"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "OtherTag"
+      value               = "Value"
+      propagate_at_launch = true
+    }
+  ]
+```
 
 Outputs
 -------
