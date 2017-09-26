@@ -1,5 +1,12 @@
 tf_aws_asg
 ==========
+
+# This module is deprecated and [terraform-aws-modules/terraform-aws-autoscaling module](https://github.com/terraform-aws-modules/terraform-aws-autoscaling) published on [the Terraform registry](https://registry.terraform.io/modules/terraform-aws-modules/autoscaling/aws) should be used instead.
+
+## This repository will not have active support any more.
+
+---
+
 A Terraform module for creating an Auto-Scaling Group and a launch
 configuration for it.
 This module makes the following assumptions:
